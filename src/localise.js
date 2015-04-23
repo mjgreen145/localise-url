@@ -24,7 +24,7 @@ var cookieLocalisation = {
 	*/
     makeUrl: function(req) {
         var country = this.getCountry(req);
-        var language = this.getLanguage(req);
+        var language = this.getLanguage(req, country);
 
         return '/' + country + '/' + language;
     },
@@ -61,10 +61,9 @@ var cookieLocalisation = {
 		4. Default to en
 		@req : the express request object
 	*/
-    getLanguage: function(req) {
+    getLanguage: function(req, country) {
 
         var lang_iso = req.cookies.lang_iso;
-        var country = this.getCountry(req);
 
         if (typeof lang_iso !== 'undefined' && langCookieRegex.test(lang_iso) === true) {
             return lang_iso.toLowerCase();

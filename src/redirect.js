@@ -1,4 +1,4 @@
-var localiseUrl = require('./localise-url');
+var localiseUrl = require('./localise');
 
 module.exports = function(req, res) {
     var localisedPrefix = localiseUrl.makeUrl(req);

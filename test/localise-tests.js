@@ -1,9 +1,9 @@
 var assert = require('chai').assert;
 var httpMocks = require('node-mocks-http');
 
-var cookieLocalisation = require('../src/localise-url');
+var cookieLocalisation = require('../src/localise');
 
-describe('Cookie Localisation, getCountry', function() {
+describe('Localisation, getCountry', function() {
 
     var req;
 
@@ -39,7 +39,7 @@ describe('Cookie Localisation, getCountry', function() {
 
 });
 
-describe('Cookie Localisation, getLanguage', function() {
+describe('Localisation, getLanguage', function() {
 
     var req;
 
@@ -50,32 +50,32 @@ describe('Cookie Localisation, getLanguage', function() {
     it('Should use lang_iso cookie if present, uppercase', function() {
         req.cookies.lang_iso = 'fr';
         req.headers['accept-language'] = 'en-GB,en;q=0.8,en-US;q=0.6,de;q=0.4,fr;q=0.2,es;q=0.2';
-        assert.strictEqual(cookieLocalisation.getLanguage(req), 'fr');
+        assert.strictEqual(cookieLocalisation.getLanguage(req, 'gb'), 'fr');
     });
 
     it('Should use lang_iso cookie if present, lowercase', function() {
         req.cookies.lang_iso = 'ZH';
         req.headers['accept-language'] = 'en-GB,en;q=0.8,en-US;q=0.6,de;q=0.4,fr;q=0.2,es;q=0.2';
-        assert.strictEqual(cookieLocalisation.getLanguage(req), 'zh');
+        assert.strictEqual(cookieLocalisation.getLanguage(req, 'gb'), 'zh');
     });
 
     it('Should use use accept-language header if there is no cookie, uppercase', function() {
         req.headers['accept-language'] = 'fr-FR,fr;q=0.8,en-US;q=0.6,de;q=0.4,fr;q=0.2,es;q=0.2';
-        assert.strictEqual(cookieLocalisation.getLanguage(req), 'fr');
+        assert.strictEqual(cookieLocalisation.getLanguage(req, 'gb'), 'fr');
     });
 
     it('Should use the country default if available', function() {
         req.headers.geo = 'COUNTRIES:cn';
-        assert.strictEqual(cookieLocalisation.getLanguage(req), 'zh');
+        assert.strictEqual(cookieLocalisation.getLanguage(req, 'cn'), 'zh');
     });
 
     it('Should default to en', function() {
-        assert.strictEqual(cookieLocalisation.getLanguage(req), 'en');
+        assert.strictEqual(cookieLocalisation.getLanguage(req, 'gb'), 'en');
     });
 
 });
 
-describe('Cookie Localisation, makeUrl', function() {
+describe('Localisation, makeUrl', function() {
 
     var req;
 
