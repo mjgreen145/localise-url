@@ -1,0 +1,17 @@
+{
+	"name": "localise-url",
+	"version":"0.0.1",
+	"description": "Automatically localise your URLs based on user's location and language preferences.",
+	"keywords": [
+		"URL",
+		"localisation",
+		"language",
+		"country"
+	],
+	"author": {
+		"name": "Matthew Green",
+		"email": "mjgreen145@gmail.com"
+	},
+	"license": "APACHE",
+	"readmeFilename": "README.md"
+}
