@@ -1,17 +1,33 @@
 {
-	"name": "localise-url",
-	"version":"0.0.1",
-	"description": "Automatically localise your URLs based on user's location and language preferences.",
-	"keywords": [
-		"URL",
-		"localisation",
-		"language",
-		"country"
-	],
-	"author": {
-		"name": "Matthew Green",
-		"email": "mjgreen145@gmail.com"
-	},
-	"license": "APACHE",
-	"readmeFilename": "README.md"
+  "name": "localise-url",
+  "version": "0.1.0",
+  "description": "Express middleware for localising your URLs based on user's location and language preferences.",
+  "keywords": [
+    "URL",
+    "localisation",
+    "language",
+    "country"
+  ],
+  "author": {
+    "name": "Matthew Green",
+    "email": "mjgreen145@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mjgreen145/localise-url.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "license": "APACHE",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "locale": "0.0.20"
+  },
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "mocha": "^2.2.4",
+    "node-mocks-http": "^1.4.1",
+    "sinon": "^1.14.1"
+  }
 }
