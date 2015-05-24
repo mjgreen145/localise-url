@@ -41,8 +41,6 @@ app.get('/:country/:lang/path', function() {
 });
 ```
 
-Note that as this module results in a redirect (302), any other middleware used after this will not be reached.
-
 Options
 -------
 
