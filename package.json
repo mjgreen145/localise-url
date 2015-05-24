@@ -1,6 +1,6 @@
 {
   "name": "localise-url",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Express middleware for localising your URLs based on user's location and language preferences.",
   "keywords": [
     "URL",
@@ -16,6 +16,7 @@
     "type": "git",
     "url": "https://github.com/mjgreen145/localise-url.git"
   },
+  "main": "index.js",
   "scripts": {
     "test": "mocha"
   },

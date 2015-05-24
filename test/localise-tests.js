@@ -74,18 +74,3 @@ describe('Localisation, getLanguage', function() {
     });
 
 });
-
-describe('Localisation, makeUrl', function() {
-
-    var req;
-
-    beforeEach(function(){
-        req = httpMocks.createRequest();
-    });
-
-    it('Should correctly make a URL prefix', function() {
-        req.cookies.country_iso = 'US';
-        req.cookies.lang_iso = 'fr';
-        assert.strictEqual(cookieLocalisation.makeUrl(req), '/us/fr');
-    });
-});

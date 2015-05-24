@@ -12,23 +12,7 @@ var defaultLocales = {
     'cn' : 'zh'
 };
 
-var cookieLocalisation = {
-
-    /*
-		redirect based on the values returned from :
-			getCountry()
-			getLanguage()
-			getDevice()
-		@req : the express request object
-		@res : the express response object
-	*/
-    makeUrl: function(req) {
-        var country = this.getCountry(req);
-        var language = this.getLanguage(req, country);
-
-        return '/' + country + '/' + language;
-    },
-
+var localise = {
 
     /*
 		sets the user country
@@ -116,7 +100,7 @@ var cookieLocalisation = {
 };
 
 module.exports = {
-    makeUrl: cookieLocalisation.makeUrl,
-    getCountry:cookieLocalisation.getCountry,
-    getLanguage:cookieLocalisation.getLanguage
+    makeUrl: localise.makeUrl,
+    getCountry:localise.getCountry,
+    getLanguage:localise.getLanguage
 };

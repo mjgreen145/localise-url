@@ -20,8 +20,19 @@ Usage
 --------
 This module is used as middleware for Express. 
 It requires  the [express cookie-parser](https://github.com/expressjs/cookie-parser) middleware to be executed first for each request.
+
+The module checks whether the requested URL is localised (based on the options you provide it), and just moves on to the next middleware if it is. If it isn't, it results in a 302 redirect to a localised URL.
+This allows you to combine multiple types of path into one block of code:
 ```js
-var localiseUrl = require('localise-url');
+var localiseUrl = require('localise-url')(options);
+app.get(['/path', '/:country/:lang/path'], 
+        localiseUrl,
+        //more middleware
+);
+```
+Alternatively, they can be separated:
+```js
+var localiseUrl = require('localise-url')(options);
 app.get('/path', 
         localiseUrl);
         
@@ -31,6 +42,34 @@ app.get('/:country/:lang/path', function() {
 ```
 
 Note that as this module results in a redirect (302), any other middleware used after this will not be reached.
+
+Options
+-------
+
+#### separator
+Type: `String`
+Default: `'/'`
+
+The country and language parts of the path will be joined using this string.
+
+#### reverse
+Type: `Boolean`
+Default: `false`
+
+Reverse the country and language parts of the URL, so that language comes first.
+
+#### countryUpper
+Type: `Boolean`
+Default: `false`
+
+Makes the country part of the URL uppercase when generated. This does not force the module to match an uppercase country in the URL when seeing if the URL is already localised.
+
+#### languageUpper
+Type: `Boolean`
+Default: `false`
+
+Makes the country part of the URL uppercase when generated. This does not force the module to match an uppercase language in the URL when seeing if the URL is already localised.
+
 
 Determining Country
 -------------------
@@ -50,7 +89,7 @@ The user's language is determined using the following rules:
 2. First supported language found in Accept-Language HTTP header, if present. Supported languages are `['en', 'de', 'fr', 'zh']`
 3. Default language for the user's country (as determined above).
 4. Default to 'en'
- 
+
 Copyright
 ---------
 Copyright (c) 2015 Matthew Green. See LICENSE for details.
