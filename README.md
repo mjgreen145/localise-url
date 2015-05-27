@@ -68,6 +68,18 @@ Default: `false`
 
 Makes the country part of the URL uppercase when generated. This does not force the module to match an uppercase language in the URL when seeing if the URL is already localised.
 
+#### countryCookie
+Type: `String`
+Default: `country_iso`
+
+The name of the cookie to look for when determining country.
+
+#### langCookie
+Type: `String`
+Default: `lang_iso`
+
+The name of the cookie to look for when determining language.
+
 
 Determining Country
 -------------------

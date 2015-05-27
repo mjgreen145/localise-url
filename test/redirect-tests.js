@@ -65,12 +65,28 @@ describe('Redirects', function() {
         });
     });
 
+    it('custom country cookie name', function() {
+        req.cookies.my_country = 'BR';
+        testRedirect('/unlocalised/path', '/br/en/unlocalised/path', {
+            countryCookie: 'my_country'
+        });
+    });
+
+    it('custom language cookie name', function() {
+        req.cookies.my_lang = 'ZH';
+        testRedirect('/unlocalised/path', '/gb/zh/unlocalised/path', {
+            langCookie: 'my_lang'
+        });
+    });
+
     it('Mixture of options', function() {
-        testRedirect('/unlocalised/path', '/en-GB/unlocalised/path', {
+        req.cookies.my_country = 'TV';
+        testRedirect('/unlocalised/path', '/en-TV/unlocalised/path', {
             reverse: true,
             separator: '-',
             countryUpper: true,
-            languageUpper: false
+            languageUpper: false,
+            countryCookie: 'my_country'
         });
     });
 });

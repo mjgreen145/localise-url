@@ -21,8 +21,8 @@ var localise = {
 		3. Default to gb
 		@req : the express request object
 	*/
-    getCountry: function(req) {
-        var cookie_id = req.cookies.country_iso;
+    getCountry: function(req, cookieName) {
+        var cookie_id = req.cookies[cookieName];
 
         if (typeof cookie_id !== 'undefined' && countryCookieRegex.test(cookie_id) === true) {
             return cookie_id.toLowerCase();
@@ -45,9 +45,9 @@ var localise = {
 		4. Default to en
 		@req : the express request object
 	*/
-    getLanguage: function(req, country) {
+    getLanguage: function(req, cookieName, country) {
 
-        var lang_iso = req.cookies.lang_iso;
+        var lang_iso = req.cookies[cookieName];
 
         if (typeof lang_iso !== 'undefined' && langCookieRegex.test(lang_iso) === true) {
             return lang_iso.toLowerCase();

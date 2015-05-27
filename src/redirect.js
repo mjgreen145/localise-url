@@ -6,6 +6,8 @@ var redirect = (function(){
 	var languageUpper;
 	var separator;
 	var reverse;
+	var countryCookie;
+	var langCookie;
 
 	var twoCharRegex = new RegExp(/[a-z]{2}/);
 	var localeRegex;
@@ -15,6 +17,8 @@ var redirect = (function(){
 		languageUpper = options.languageUpper || false;
 		separator = options.separator || '/';
 		reverse = options.reverse || false;
+		countryCookie = options.countryCookie || 'country_iso';
+		langCookie = options.langCookie || 'lang_iso';
 
 		localeRegex = new RegExp('^\\/' + twoCharRegex.source + (separator+'').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&") + twoCharRegex.source + "(\\/|\\?|$)", 'i');
 	}
@@ -24,8 +28,8 @@ var redirect = (function(){
 	}
 
 	function doRedirect(req, res) {
-		var country = localise.getCountry(req);
-		var language = localise.getLanguage(req, country);
+		var country = localise.getCountry(req, countryCookie);
+		var language = localise.getLanguage(req, langCookie, country);
 
 		var urlPrefix = '/';
 		if(reverse) {
