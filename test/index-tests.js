@@ -20,7 +20,17 @@ describe('Localise Url - Index: Non-localised URL', function() {
         assert.isFunction(localiseUrl({}));
     });
 
-    it('Redirects for an unlocalised URL', function() {
+    it('Redirects for an unlocalised URL - no options', function() {
+        sinon.stub(res, 'redirect');
+
+        var localiseMiddleware = localiseUrl();
+        localiseMiddleware(req, res);
+
+        assert.isTrue(res.redirect.calledOnce);
+        assert.isTrue(res.redirect.calledWith(302, '/gb/en/unlocalised/url'));
+    });
+
+    it('Redirects for an unlocalised URL - empty options', function() {
         sinon.stub(res, 'redirect');
 
         var localiseMiddleware = localiseUrl({});
@@ -32,7 +42,7 @@ describe('Localise Url - Index: Non-localised URL', function() {
 
 });
 
-describe('Localise Url - Index: Non-localised URL', function() {
+describe('Localise Url - Index: localised URL', function() {
 
     var req;
     var res;
