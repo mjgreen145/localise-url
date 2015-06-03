@@ -8,7 +8,7 @@ describe('Redirects', function() {
 
     var req, res;
 
-    function testRedirect(originalUrl, expected, options) {
+    function testRedirect(originalUrl, expectedCode, expectedUrl, options) {
         sinon.stub(res, 'redirect');
         req.originalUrl = originalUrl;
 
@@ -16,7 +16,7 @@ describe('Redirects', function() {
         redirect.doRedirect(req, res);
 
         assert.isTrue(res.redirect.calledOnce);
-        assert.isTrue(res.redirect.calledWith(302, expected));
+        assert.isTrue(res.redirect.calledWith(expectedCode, expectedUrl));
 
         res.redirect.restore();
     }
@@ -27,61 +27,79 @@ describe('Redirects', function() {
     });
 
     it('Default Usage', function() {
-        testRedirect('/unlocalised/path', '/gb/en/unlocalised/path', {});
+        testRedirect('/unlocalised/path', 302, '/gb/en/unlocalised/path', {});
     });
 
     it('Preserves a query string', function() {
-        testRedirect('/unlocalised/path?a=b&c=d', '/gb/en/unlocalised/path?a=b&c=d', {});
+        testRedirect('/unlocalised/path?a=b&c=d', 302, '/gb/en/unlocalised/path?a=b&c=d', {});
     });
 
     it('Uppercase Country', function() {
-        testRedirect('/unlocalised/path', '/GB/en/unlocalised/path', {
+        testRedirect('/unlocalised/path', 302, '/GB/en/unlocalised/path', {
             countryUpper: true
         });
     });
 
     it('Uppercase Language', function() {
-        testRedirect('/unlocalised/path', '/gb/EN/unlocalised/path', {
+        testRedirect('/unlocalised/path', 302, '/gb/EN/unlocalised/path', {
             languageUpper: true
         });
     });
 
     it('Uppercase both', function() {
-        testRedirect('/unlocalised/path', '/GB/EN/unlocalised/path', {
+        testRedirect('/unlocalised/path', 302, '/GB/EN/unlocalised/path', {
             countryUpper: true,
             languageUpper: true
         });
     });
 
     it('Separator: hyphen', function() {
-        testRedirect('/unlocalised/path', '/gb-en/unlocalised/path', {
+        testRedirect('/unlocalised/path', 302, '/gb-en/unlocalised/path', {
             separator: '-'
         });
     });
 
     it('Reverse order', function() {
-        testRedirect('/unlocalised/path', '/en/gb/unlocalised/path', {
+        testRedirect('/unlocalised/path', 302, '/en/gb/unlocalised/path', {
             reverse: true
         });
     });
 
     it('custom country cookie name', function() {
         req.cookies.my_country = 'BR';
-        testRedirect('/unlocalised/path', '/br/en/unlocalised/path', {
+        testRedirect('/unlocalised/path', 302, '/br/en/unlocalised/path', {
             countryCookie: 'my_country'
         });
     });
 
     it('custom language cookie name', function() {
         req.cookies.my_lang = 'ZH';
-        testRedirect('/unlocalised/path', '/gb/zh/unlocalised/path', {
+        testRedirect('/unlocalised/path', 302, '/gb/zh/unlocalised/path', {
             langCookie: 'my_lang'
+        });
+    });
+
+    it('3xx http code', function() {
+        testRedirect('/unlocalised/path', 301, '/gb/en/unlocalised/path', {
+            httpCode: 301
+        });
+    });
+
+    it('invalid 3xx http code', function() {
+        testRedirect('/unlocalised/path', 302, '/gb/en/unlocalised/path', {
+            httpCode: 348
+        });
+    });
+
+    it('non 3xx http code', function() {
+        testRedirect('/unlocalised/path', 302, '/gb/en/unlocalised/path', {
+            httpCode: 200
         });
     });
 
     it('Mixture of options', function() {
         req.cookies.my_country = 'TV';
-        testRedirect('/unlocalised/path', '/en-TV/unlocalised/path', {
+        testRedirect('/unlocalised/path', 302, '/en-TV/unlocalised/path', {
             reverse: true,
             separator: '-',
             countryUpper: true,

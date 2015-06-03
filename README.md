@@ -80,6 +80,12 @@ Default: `lang_iso`
 
 The name of the cookie to look for when determining language.
 
+#### httpCode
+Type: `Number`
+Default: `302`
+
+The HTTP code to return with the redirect. This must be a number between 300 and 308. Anything else will cause the module to default to a 302 redirect.
+
 
 Determining Country
 -------------------

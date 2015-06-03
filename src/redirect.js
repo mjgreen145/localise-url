@@ -8,6 +8,7 @@ var redirect = (function(){
 	var reverse;
 	var countryCookie;
 	var langCookie;
+	var httpCode;
 
 	var twoCharRegex = new RegExp(/[a-z]{2}/);
 	var localeRegex;
@@ -19,6 +20,7 @@ var redirect = (function(){
 		reverse = options.reverse || false;
 		countryCookie = options.countryCookie || 'country_iso';
 		langCookie = options.langCookie || 'lang_iso';
+		httpCode = (options.httpCode >= 300 && options.httpCode <= 308) ? options.httpCode : 302;
 
 		localeRegex = new RegExp('^\\/' + twoCharRegex.source + (separator+'').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&") + twoCharRegex.source + "(\\/|\\?|$)", 'i');
 	}
@@ -41,7 +43,7 @@ var redirect = (function(){
 			urlPrefix += separator;
 			urlPrefix += languageUpper ? language.toUpperCase() : language;	
 		}
-	    res.redirect(302, urlPrefix + req.originalUrl);
+	    res.redirect(httpCode, urlPrefix + req.originalUrl);
 	}
 
 	return {
